@@ -18,7 +18,7 @@ public class Main {
             StringBuilder range = new StringBuilder();
             String error,choose;
 
-            System.out.println("================ Menu Utama ================");
+            System.out.println("==================== Menu Utama =====================");
             for (int i = 0; i < menu.length; i++) {
                 int no = i + 1;
                 System.out.println(no + ". " + menu[i]);
@@ -86,6 +86,7 @@ public class Main {
             products.add(new Product(name, Integer.parseInt(quantity)));
 
             do {
+                scanner.nextLine();
                 if (!confirm.equals("y")) Validation.printError("Masukkan Y atau N");
 
                 System.out.print("Apakah anda ingin menambah produk? [y|n] : ");
@@ -95,6 +96,7 @@ public class Main {
             } while(!confirm.equals("n") && !confirm.equals("y"));
 
         } while (confirm.equalsIgnoreCase("y"));
+        listProduct();
     }
     private static void updateProduct() {
         String name, quantity, confirm = "ya", error_name, error_quantity;
@@ -123,6 +125,7 @@ public class Main {
             } while (!error_quantity.isEmpty());
 
             do {
+                scanner.nextLine();
                 if (!confirm.equals("ya")) Validation.printError("Masukkan Ya atau Tidak");
 
                 System.out.print("Apakah Anda yakin dengan jumlah produk saat ini? [Ya | Tidak] : ");
@@ -134,6 +137,7 @@ public class Main {
                 int get_index =  Integer.parseInt(find_result.split("-")[1]);
                 products.set(get_index, new Product(name, Integer.parseInt(quantity)));
                 System.out.println("Data produk berhasil diubah");
+                listProduct();
             }
         }
     }
@@ -169,6 +173,7 @@ public class Main {
                 String finalName = name;
                 products.removeIf(product -> product.getName().equals(finalName));
                 System.out.println("Data produk berhasil dihapus");
+                listProduct();
             }
         }
     }

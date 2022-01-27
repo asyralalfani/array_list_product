@@ -18,12 +18,13 @@ public class Product {
     }
 
     public static void printTableHeader() {
-        System.out.printf("%15s %10s %10s %5s%n", "Item", "|", "Quantity", "|");
-        System.out.printf("%s%n", "-" + "-".repeat(42));
+        System.out.println("List Data Produk:");
+        System.out.printf("%20s %15s %10s %5s%n", "Item", "|", "Quantity", "|");
+        System.out.printf("%s%n", "-" + "-".repeat(52));
     }
 
     public void printData() {
-        System.out.printf("%15s %10s %10s %5s%n", this.getName(), "|", this.getQuantity(), "|");
+        System.out.printf("%20s %15s %10s %5s%n", this.getName(), "|", this.getQuantity(), "|");
     }
 }
 
