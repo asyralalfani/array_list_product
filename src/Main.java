@@ -49,6 +49,14 @@ public class Main {
         products.forEach(product -> System.out.println("Name : " + product.getName() + ", Quantity : " + product.getQuantity()));
     }
 
+    private static String findProduct(String name) {
+        String [] find = new String[1];
+        products.forEach(product -> {
+            if (product.getName().equals(name)) find[0] = "ditemukan";
+        });
+        return find[0] != null ? "" : "Produk yang dicari tidak ada";
+    }
+
     private static void addProduct() {
         String name, quantity, confirm = "y", error_name, error_quantity;
 
@@ -87,5 +95,39 @@ public class Main {
         } while (confirm.equalsIgnoreCase("y"));
     }
     private static void updateProduct() {}
-    private static void deleteProduct() {}
+
+    private static void deleteProduct() {
+        String name, confirm = "ya", error_name;
+        System.out.println("================ Hapus Data Produk ================");
+
+        scanner.nextLine();
+
+        do {
+            System.out.print("Masukkan nama produk : ");
+            name = scanner.nextLine();
+            error_name = Validation.validation("Name", name);
+            if (!error_name.isEmpty()) {
+                Validation.printError(error_name);
+            }
+        } while (!error_name.isEmpty());
+
+        String find_result = findProduct(name);
+        if (!find_result.isEmpty()) {
+            Validation.printError(find_result);
+        } else {
+            do {
+                if (!confirm.equals("ya")) Validation.printError("Masukkan Ya atau Tidak");
+
+                System.out.print("Apakah Anda yakin mau menghapus produk ini dari keranjang Anda? [Ya | Tidak] : ");
+                confirm = scanner.next().toLowerCase();
+
+            } while(!confirm.equals("tidak") && !confirm.equals("ya"));
+
+            if (confirm.equals("ya")) {
+                String finalName = name;
+                products.removeIf(product -> product.getName().equals(finalName));
+                System.out.println("Data produk berhasil dihapus");
+            }
+        }
+    }
 }
