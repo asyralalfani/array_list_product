@@ -1,8 +1,8 @@
 package Model;
 
 public class Product {
-    private String name;
-    private int quantity;
+    private final String name;
+    private final int quantity;
 
     public Product(String name, int quantity) {
         this.name = name;
@@ -13,15 +13,17 @@ public class Product {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public static void printTableHeader() {
+        System.out.printf("%15s %10s %10s %5s%n", "Item", "|", "Quantity", "|");
+        System.out.printf("%s%n", "-" + "-".repeat(42));
+    }
+
+    public void printData() {
+        System.out.printf("%15s %10s %10s %5s%n", this.getName(), "|", this.getQuantity(), "|");
     }
 }
+

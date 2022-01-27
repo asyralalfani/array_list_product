@@ -46,7 +46,8 @@ public class Main {
     }
 
     private static void listProduct() {
-        products.forEach(product -> System.out.println("Name : " + product.getName() + ", Quantity : " + product.getQuantity()));
+       Product.printTableHeader();
+       products.forEach(Product::printData);
     }
 
     private static String findProduct(String name) {
@@ -120,7 +121,7 @@ public class Main {
                     Validation.printError(error_quantity);
                 }
             } while (!error_quantity.isEmpty());
-            
+
             do {
                 if (!confirm.equals("ya")) Validation.printError("Masukkan Ya atau Tidak");
 
