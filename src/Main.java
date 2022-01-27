@@ -50,11 +50,12 @@ public class Main {
     }
 
     private static String findProduct(String name) {
-        String [] find = new String[1];
-        products.forEach(product -> {
-            if (product.getName().equals(name)) find[0] = "ditemukan";
-        });
-        return find[0] != null ? "" : "Produk yang dicari tidak ada";
+        int index = 0;
+        for (Product product : products) {
+            if (product.getName().equals(name)) return "ditemukan-" + index;
+            index++;
+        }
+        return "Produk yang dicari tidak ada";
     }
 
     private static void addProduct() {
@@ -94,14 +95,10 @@ public class Main {
 
         } while (confirm.equalsIgnoreCase("y"));
     }
-    private static void updateProduct() {}
-
-    private static void deleteProduct() {
-        String name, confirm = "ya", error_name;
-        System.out.println("================ Hapus Data Produk ================");
-
+    private static void updateProduct() {
+        String name, quantity, confirm = "ya", error_name, error_quantity;
         scanner.nextLine();
-
+        System.out.println("================ Ubah Data Produk ================");
         do {
             System.out.print("Masukkan nama produk : ");
             name = scanner.nextLine();
@@ -112,7 +109,51 @@ public class Main {
         } while (!error_name.isEmpty());
 
         String find_result = findProduct(name);
-        if (!find_result.isEmpty()) {
+        if (!find_result.contains("ditemukan")) {
+            Validation.printError(find_result);
+        } else {
+            do {
+                System.out.print("Masukkan jumlah produk : ");
+                quantity = scanner.next();
+                error_quantity = Validation.validation("Quantity", quantity);
+                if (!error_quantity.isEmpty()) {
+                    Validation.printError(error_quantity);
+                }
+            } while (!error_quantity.isEmpty());
+            
+            do {
+                if (!confirm.equals("ya")) Validation.printError("Masukkan Ya atau Tidak");
+
+                System.out.print("Apakah Anda yakin dengan jumlah produk saat ini? [Ya | Tidak] : ");
+                confirm = scanner.next().toLowerCase();
+
+            } while(!confirm.equals("tidak") && !confirm.equals("ya"));
+
+            if (confirm.equals("ya")) {
+                int get_index =  Integer.parseInt(find_result.split("-")[1]);
+                products.set(get_index, new Product(name, Integer.parseInt(quantity)));
+                System.out.println("Data produk berhasil diubah");
+            }
+        }
+    }
+
+    private static void deleteProduct() {
+        String name, confirm = "ya", error_name;
+
+        scanner.nextLine();
+
+        System.out.println("================ Hapus Data Produk ================");
+        do {
+            System.out.print("Masukkan nama produk : ");
+            name = scanner.nextLine();
+            error_name = Validation.validation("Name", name);
+            if (!error_name.isEmpty()) {
+                Validation.printError(error_name);
+            }
+        } while (!error_name.isEmpty());
+
+        String find_result = findProduct(name);
+        if (!find_result.contains("ditemukan")) {
             Validation.printError(find_result);
         } else {
             do {
