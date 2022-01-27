@@ -25,7 +25,7 @@ public class Validation {
                 }
             }
             if (input.equals("Name")) {
-                boolean match = regex("^[a-zA-Z0-9]+$", value);
+                boolean match = regex("^[a-zA-Z0-9\\s]+$", value);
                 if (!match) {
                     throw new InputMismatchException("Hanya boleh berupa huruf dan angka");
                 }
