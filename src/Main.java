@@ -1,7 +1,12 @@
+import Model.Product;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
+    private static final List<Product> products = new ArrayList<>();
 
     public static void main(String[] args) {
         mainMenu();
@@ -40,8 +45,47 @@ public class Main {
         }
     }
 
-    private static void listProduct() {}
-    private static void addProduct() {}
+    private static void listProduct() {
+        products.forEach(product -> System.out.println("Name : " + product.getName() + ", Quantity : " + product.getQuantity()));
+    }
+
+    private static void addProduct() {
+        String name, quantity, confirm = "y", error_name, error_quantity;
+
+        System.out.println("================ Data Produk ================");
+        do {
+            scanner.nextLine();
+            do {
+                System.out.print("Masukkan nama produk : ");
+                name = scanner.nextLine();
+                error_name = Validation.validation("Name", name);
+                if (!error_name.isEmpty()) {
+                    Validation.printError(error_name);
+                }
+            } while (!error_name.isEmpty());
+
+            do {
+                System.out.print("Masukkan jumlah produk : ");
+                quantity = scanner.next();
+                error_quantity = Validation.validation("Quantity", quantity);
+                if (!error_quantity.isEmpty()) {
+                    Validation.printError(error_quantity);
+                }
+            } while (!error_quantity.isEmpty());
+
+            products.add(new Product(name, Integer.parseInt(quantity)));
+
+            do {
+                if (!confirm.equals("y")) Validation.printError("Masukkan Y atau N");
+
+                System.out.print("Apakah anda ingin menambah produk? [y|n] : ");
+                confirm = scanner.next().toLowerCase();
+                confirm = String.valueOf(confirm.charAt(0));
+
+            } while(!confirm.equals("n") && !confirm.equals("y"));
+
+        } while (confirm.equalsIgnoreCase("y"));
+    }
     private static void updateProduct() {}
     private static void deleteProduct() {}
 }

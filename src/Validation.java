@@ -18,10 +18,16 @@ public class Validation {
     public static String validation(String input, String value) {
         String error = "";
         try {
-            if (input.equals("Menu")) {
+            if (input.equals("Menu") || input.equals("Quantity")) {
                 boolean match = regex("^[0-9]+$", value);
                 if (!match) {
                     throw new InputMismatchException("Hanya boleh berupa angka");
+                }
+            }
+            if (input.equals("Name")) {
+                boolean match = regex("^[a-zA-Z0-9]+$", value);
+                if (!match) {
+                    throw new InputMismatchException("Hanya boleh berupa huruf dan angka");
                 }
             }
         } catch (InputMismatchException | NumberFormatException e) {
